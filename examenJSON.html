@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<title> Examen JSON
+			</title>
+		</head>
+
+			<body>
+			<p id="objetos"></p>	
+			<p id="notaPromedio"></p>
+			<p id="notaMax"></p>
+			<p id="notaMin"></p>
+			<p id="repeticion"></p>
+
+			<button onclick="mostrarObjetos()">Mostrar todos los estudiantes</button>
+			<button onclick="notaPromedio()">Mostrar nota Promedio del curso</button>
+			<button onclick="notaMaxima()">Mostrar nota maxima del curso</button>
+			<button onclick="notaMinima()">Mostrar nota minima del curso</button>
+
+			</body>
+	 
+				
+				<script>
+				//Definir variables
+				var i;
+				var jsObj;
+				var jsonText;
+				var max;
+				var min;
+				var out;
+				var promedio;
+				var nombreMax;
+				var nombreMin;
+				
+				//Valores iniciales de algunas variables
+				i=0;//Se usa en todos los ciclos for, es el valor inicial del contador.
+				max=0;//Codigo nota maxima
+				min=100;//Codigo nota minima
+				promedio=0;//Codigo nota promedio del curso
+				
+				
+				//Variable de texto: Informacion de los estudiantes de un curso.
+				var jsonText='{"estudiantes":['+'{"codigo":"001","nombre":"Carlos","nota":75},'
+							+'{"codigo":"002","nombre":"Juana","nota":99},'
+							+'{"codigo":"003","nombre":"Joel","nota":77},'
+							+'{"codigo":"004","nombre":"Ines","nota":89},'
+							+'{"codigo":"005","nombre":"Hugo","nota":94},'
+							+'{"codigo":"006","nombre":"Maria","nota":90},'
+							+'{"codigo":"007","nombre":"Gilberto","nota":55},'
+							+'{"codigo":"008","nombre":"Luis","nota":72},'
+							+'{"codigo":"009","nombre":"Santiago","nota":100},'
+							+'{"codigo":"010","nombre":"Irma","nota":86}'
+							+']}';
+
+
+				// Conversion de variable tipo cadena a variable tipo objeto
+				var jsObj = JSON.parse(jsonText);
+				
+
+				//Codigo para mostrar todos los objetos
+				function objetosJSON(json){
+				out = "-------Estudiantes------<br>";
+				for(i;i<json.estudiantes.length;i++){
+				out+="codigo:"+json.estudiantes[i].codigo+" - "+"nombre:"+json.estudiantes[i].nombre+" - "+"nota:"+json.estudiantes[i].nota+"<br>";
+				
+				}
+				document.getElementById("objetos").innerHTML=out;
+				}
+				
+				function mostrarObjetos(){
+				objetosJSON(jsObj);
+				}
+
+		
+				//Codigo para mostrar la nota promedio de un curso
+				function promedioJSON(json){
+					for(i;i<json.estudiantes.length;i++){
+					promedio+=json.estudiantes[i].nota/(json.estudiantes.length);
+				}
+				
+				document.getElementById("notaPromedio").innerHTML="La nota promedio fue de: "+promedio.toPrecision(4);
+				}
+				
+
+				function notaPromedio(){
+					promedioJSON(jsObj);
+				}
+
+				//Codigo para buscar la nota maxima	
+				function maxJSON(json){for(i;i<json.estudiantes.length;i++){
+					if(max<json.estudiantes[i].nota){
+						max=json.estudiantes[i].nota;
+						nombreMax=json.estudiantes[i].nombre;
+						
+					}
+
+				}
+				document.getElementById("notaMax").innerHTML="La nota maxima del curso fue de "+max+" y correspondio a: "+nombreMax;
+				}
+				
+								
+				function notaMaxima(){
+					maxJSON(jsObj);
+				}
+
+				
+				//Codigo para buscar la nota minima
+				function minJSON(json){for(i;i<json.estudiantes.length;i++){
+				if(min>json.estudiantes[i].nota){
+				min=json.estudiantes[i].nota;
+				nombreMin=json.estudiantes[i].nombre;
+				}
+
+				}
+				document.getElementById("notaMin").innerHTML="La nota mas baja del curso fue de "+min+" y correspondio a: "+nombreMin;
+				}
+				
+								
+				function notaMinima(){
+			
+				minJSON(jsObj);
+
+				}
+			
+
+
+</script>
+
+</html>
